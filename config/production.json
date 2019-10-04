@@ -1,0 +1,10 @@
+{
+    "db": {
+        "connectUrl": "mongodb://localhost/sfecli_manager"
+    },
+    "session": {
+        "name": "JSESSIONID",
+        "secret": "no_secret"
+    }
+}
+
