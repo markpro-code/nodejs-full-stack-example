@@ -9,7 +9,7 @@ module.exports = {
     },
     parser: 'babel-eslint',
     globals: {
-
+        '$namespace': 'readonly'
     },
     rules: {
         'react/jsx-filename-extension': [0, { extensions: ['.js', '.jsx'] }],
@@ -57,7 +57,7 @@ module.exports = {
         'eslint-plugin-jsx-a11y/no-static-element-interactions': 0,
         'function-paren-newline': 1,
         'global-require': 0,
-        'key-spacing': ["error", { "multiLine": { "beforeColon": false, "afterColon": true }, "align": { "beforeColon": true, "afterColon": true, "on": "colon" } }],
+        // 'key-spacing': ["error", { "multiLine": { "beforeColon": false, "afterColon": true }, "align": { "beforeColon": true, "afterColon": false, "on": "colon" } }],
         'linebreak-style': 0,
         'max-len': ['error', { code: 180 }],
         'no-case-declarations': 1,
