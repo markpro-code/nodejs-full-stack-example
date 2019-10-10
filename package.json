@@ -6,7 +6,8 @@
   "author": "markpro-code <markpro.code@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "webpack-dev-server": "webpack-dev-server --config config/webpack.config.dev.js"
+    "webpack-dev-server": "webpack-dev-server --config config/webpack.config.dev.js --open",
+    "build": "webpack ---config config/webpack.config.prod.js"
   },
   "dependencies": {
     "@babel/polyfill": "^7.6.0",

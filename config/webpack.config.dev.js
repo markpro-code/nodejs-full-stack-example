@@ -8,12 +8,12 @@ const { devServer } = require('./webpack_dev_server.js')
 module.exports = {
     mode: 'development',
     entry: {
-        index: './src/index',
+        index: path.resolve(__dirname, '../src/client/index.js'),
     },
     output: {
         path: path.join(__dirname, '../dist/assets/'),
         filename: '[name].js',
-        publicPath: `${publicPath}`,
+        publicPath,
     },
     optimization,
     cache: true,
@@ -49,9 +49,10 @@ module.exports = {
                 {
                     loader: 'css-loader',
                     options: {
-                        modules: true,
-                        localIdentName: '[name]__[local]___[hash:base64:5]',
                         importLoaders: 2,
+                        modules: {
+                            localIdentName: '[name]__[local]___[hash:base64:5]',
+                        },
                     },
                 },
                 'less-loader',

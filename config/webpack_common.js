@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 const publicPath = '/assets/'
 
 const namespaceInjectLoader = {
-    loader: path.resolve(__dirname, '../src/client/loaders/namespace_inject'),
+    loader: path.resolve(__dirname, '../src/client/loaders/namespace_inject.js'),
     options: {
         relativeRoot: path.resolve(__dirname, '../src'),
     },

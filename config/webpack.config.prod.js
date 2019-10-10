@@ -3,14 +3,14 @@ const webpack = require('webpack')
 const CaseSensitivePlugin = require('case-sensitive-paths-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const { optimization, publicPath, fileLoaders, namespaceInjectLoader, alias } = require('./config/webpack_common.js')
+const { optimization, publicPath, fileLoaders, namespaceInjectLoader, alias } = require('./webpack_common.js')
 
 module.exports = {
     mode: 'production',
     entry: {
-        index: './src/index',
+        index: path.resolve(__dirname, '../src/client/index.js'),
     },
     output: {
         path: path.join(__dirname, '../dist/assets'),
@@ -66,9 +66,10 @@ module.exports = {
                 {
                     loader: 'css-loader',
                     options: {
-                        modules: true,
                         importLoaders: 2,
-                        localIdentName: '[name]__[local]___[hash:base64:5]',
+                        modules: {
+                            localIdentName: '[name]__[local]___[hash:base64:5]',
+                        },
                     },
                 },
                 'less-loader',
