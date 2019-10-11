@@ -5,16 +5,13 @@ const publicPath = '/assets/'
 
 const namespaceInjectLoader = {
     loader: path.resolve(__dirname, '../src/client/loaders/namespace_inject.js'),
-    options: {
-        relativeRoot: path.resolve(__dirname, '../src'),
-    },
 }
 
 const optimization = {
     minimizer: [
         new TerserPlugin({
             parallel: true,
-            // sourceMap: true,
+            sourceMap: true,
         }),
     ],
     splitChunks: {

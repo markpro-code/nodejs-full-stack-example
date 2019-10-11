@@ -7,10 +7,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 const { optimization, publicPath, fileLoaders, namespaceInjectLoader, alias } = require('./webpack_common.js')
 
+const clientRoot = path.join(__dirname, '../src/client')
+
 module.exports = {
     mode: 'production',
     entry: {
-        index: path.resolve(__dirname, '../src/client/index.js'),
+        index: path.resolve(clientRoot, 'index.js'),
     },
     output: {
         path: path.join(__dirname, '../dist/assets'),
@@ -27,7 +29,7 @@ module.exports = {
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, '../src/client/index_prod.html'),
+            template: path.resolve(clientRoot, 'index_prod.html'),
             filename: '../index.html',
         }),
         new MiniCSSExtractPlugin({
@@ -40,7 +42,7 @@ module.exports = {
         rules: fileLoaders.concat([{
             test: /\.(js|jsx)$/,
             use: ['babel-loader', namespaceInjectLoader],
-            include: [path.join(__dirname, '../src/client')],
+            include: [clientRoot],
         },
         {
             test: /\.css$/,
@@ -74,7 +76,7 @@ module.exports = {
                 },
                 'less-loader',
             ],
-            include: [path.resolve(__dirname, '../src/client')],
+            include: [clientRoot],
         },
         {
             test: /\.less$/,

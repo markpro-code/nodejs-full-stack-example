@@ -1,12 +1,11 @@
 {
   "name": "nodejs-full-stack-example",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": "https://github.com/markpro-code/nodejs-full-stack-example.git",
   "author": "markpro-code <markpro.code@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "webpack-dev-server": "webpack-dev-server --config config/webpack.config.dev.js --open",
+    "webpack-dev-server": "webpack-dev-server --config=config/webpack.config.dev.js --open",
     "build": "webpack ---config config/webpack.config.prod.js"
   },
   "dependencies": {
