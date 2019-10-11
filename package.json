@@ -24,6 +24,8 @@
     "lodash": "^4.17.15",
     "mongoose": "^5.7.3",
     "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
     "react": "^16.10.2",
     "react-diff-viewer": "^2.0.1",
     "react-dom": "^16.10.2",

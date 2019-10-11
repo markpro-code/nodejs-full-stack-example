@@ -22,6 +22,9 @@ function start() {
     app.use(morgan('combined'))
     // gzip
     app.use(compression())
+    // auth
+    app.use(require('./user/jwt_auth_middleware'))
+
     // session
     app.use(session({
         name: config.get('session.name'),
