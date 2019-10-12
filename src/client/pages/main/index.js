@@ -23,7 +23,6 @@ class Main extends React.Component {
 
 const selectors = createSelector([state => state.commons, state => state.router], (commons, router) => ({
     commons,
-    router,
 }))
 
 

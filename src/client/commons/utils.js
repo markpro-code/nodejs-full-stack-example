@@ -1,4 +1,6 @@
 import { get, map, find, forEach } from 'lodash'
+import { connect } from 'react-redux'
+import { createSelector } from 'reselect'
 
 export function deepFreeze(obj) {
     // Retrieve the property names defined on obj
@@ -49,4 +51,12 @@ export function createActionTypes(namespace, list) {
         obj[item] = `${namespace}/${item}`
     })
     return deepFreeze(obj)
+}
+
+export function defaultConnect(namespace, PageComponent, mapDispatchToProps) {
+    const mapStateToProps = createSelector(
+        [state => state.commons, state => state[namespace]],
+        (commons, data) => ({ commons, data }),
+    )
+    return connect(mapStateToProps, mapDispatchToProps)(PageComponent)
 }
