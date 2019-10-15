@@ -5,7 +5,7 @@
   "author": "markpro-code <markpro.code@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "webpack-dev-server": "webpack-dev-server --config=config/webpack.config.dev.js --open",
+    "dev-server": "webpack-dev-server --config=config/webpack.config.dev.js --open",
     "build": "webpack ---config config/webpack.config.prod.js"
   },
   "dependencies": {

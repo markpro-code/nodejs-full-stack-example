@@ -13,10 +13,8 @@ export const actions = {
         }
     },
 
-    dpActionLogin(username, password) {
-        return {
-            type: actionTypes.LOGIN,
-            payload: { username, password },
-        }
-    },
+    dpActionLogin: (username, password) => ({
+        type: actionTypes.LOGIN,
+        payload: { username, password },
+    }),
 }
