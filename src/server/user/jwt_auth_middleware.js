@@ -1,5 +1,5 @@
 const passport = require('passport')
-const { JwtStrategy, ExtractJwt } = require('passport-jwt').Strategy
+const { Strategy, ExtractJwt } = require('passport-jwt')
 const userService = require('./service.js')
 
 const opts = {
@@ -9,7 +9,7 @@ const opts = {
     audience: 'yoursite.net',
 }
 
-const strategy = new JwtStrategy(opts, function (jwtPayload, done) {
+const strategy = new Strategy(opts, function (jwtPayload, done) {
     userService.findOne({ id: jwtPayload.sub }, function (err, user) {
         if (err) {
             return done(err, false)

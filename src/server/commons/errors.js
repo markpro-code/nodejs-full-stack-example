@@ -1,3 +1,5 @@
+const { validationResult } = require('express-validator')
+
 class ActionFailError extends Error {
     constructor(title, ...params) {
     // Pass remaining arguments (including vendor specific ones) to parent constructor
@@ -29,7 +31,18 @@ class RequestValidationError extends Error {
     }
 }
 
+function handleValidationError(req, res, next) {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+        const msg = errors.array().map(item => item.msg).join('\n')
+        next(new RequestValidationError(msg))
+    } else {
+        next()
+    }
+}
+
 module.exports = {
     ActionFailError,
     RequestValidationError,
+    handleValidationError,
 }

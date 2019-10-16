@@ -1,0 +1,16 @@
+{
+    "db": {
+        "name":"node_full_stack_example",
+        "host": "localhost",
+        "user": "",
+        "pass": ""
+    },
+    "session": {
+        "name": "JSESSIONID",
+        "secret": "no_secret"
+    },
+    "cas": {
+        "serverPath": "http://0.0.0.0:9091/cas",
+        "loginPageUrl": "http://0.0.0.0:9091/cas/login"
+    }
+}

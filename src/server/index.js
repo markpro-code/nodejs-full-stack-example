@@ -7,7 +7,7 @@ const FileStore = require('session-file-store')(session)
 const ip = require('ip')
 
 const appRouter = require('./router.js')
-const { RequestValidationError } = require('./errors.js')
+const { RequestValidationError } = require('./commons/errors.js')
 const dbManager = require('./db_manager.js')
 
 

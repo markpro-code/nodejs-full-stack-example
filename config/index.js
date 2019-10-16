@@ -1,10 +1,9 @@
 const path = require('path')
 const convict = require('convict')
 const { Container } = require('typedi')
+const ip = require('ip')
 
-const debug = Container.get('debug')
-
-// Define config schema
+// Define a schema
 const config = convict({
     port: {
         doc: 'Server Port',
@@ -14,9 +13,9 @@ const config = convict({
     },
     env: {
         doc: 'The application environment.',
-        format: ['production', 'development'],
-        default: 'development',
-        env: 'NODE_ENV',
+        format: ['prod', 'dev', 'test'],
+        default: 'dev',
+        env: 'COMPILE_ENV',
     },
     session: {
         name: {
@@ -34,20 +33,55 @@ const config = convict({
 
     },
     db: {
-        connectUrl: {
-            doc: 'database connect url',
+        name: {
+            doc: 'Database Instance Name',
+            format: String,
+            default: null,
+        },
+        host: {
+            doc: 'Database Host',
+            format: String,
+            default: null,
+        },
+        user: {
+            doc: 'Database Username',
+            format: String,
+            default: '',
+        },
+        pass: {
+            doc: 'Database Password',
             format: String,
             default: '',
         },
     },
+    cas: {
+        servicePrefixAddress: {
+            doc: 'CAS Service Prefix',
+            format: String,
+            default: `http://${ip.address()}`,
+        },
+        serverPath: {
+            doc: 'CAS Service Path',
+            format: String,
+            default: null,
+        },
+        loginPageUrl: {
+            doc: 'CAS login page url',
+            format: 'url',
+            default: null,
+        },
+    },
+
 })
 
 const env = config.get('env')
+console.info('[config/index.js]: env = ', env)
+
+console.info('[config/index.js]: load config file:', path.resolve(__dirname, `./${env}.json`))
 config.loadFile(path.resolve(__dirname, `./${env}.json`))
-// Perform validation
-config.validate({ allowed: 'strict' })
 
-debug('load config:', config.toString())
+config.validate({ allowed: 'strict' }) // Perform validation
 
+Container.set('config', config)
 
 module.exports = config

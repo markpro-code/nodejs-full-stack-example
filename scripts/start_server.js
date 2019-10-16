@@ -1,12 +1,10 @@
 const { Container } = require('typedi')
-
-Container.set('debug', require('debug')('sfecli-manager'))
-
-// load config first
 const config = require('../config')
+const { logger } = require('../src/server/log_manager.js')
 
-Container.set('env.isDev', config.get('env') === 'development')
-Container.set('config', config)
+logger.info('config', config.toString())
+
+Container.set('env.isDev', config.get('env') === 'dev')
 
 // start server
 require('../src/server').start()

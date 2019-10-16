@@ -57,3 +57,14 @@ function request(options) {
         return Promise.reject(error)
     })
 }
+
+export function userLogin(username, password) {
+    return request({
+        method: 'POST',
+        url: '/api/user/login',
+        data: { username, password },
+    })
+        .then(userInfo => {
+        //
+        })
+}

@@ -1,11 +1,19 @@
 const mongoose = require('mongoose')
 const { Container } = require('typedi')
+const CryptoJS = require('crypto-js')
+const { isEmpty } = require('./commons/utils.js')
+
+const { logger } = require('./log_manager.js')
+
+function dc(value) {
+    return CryptoJS.AES.decrypt(value, 'boring').toString(CryptoJS.enc.Utf8)
+}
 
 class DBManager {
     constructor(container) {
         this.container = container
-        this.debug = container.get('debug')
     }
+
 
     connectDB() {
         const isDevMode = this.container.get('env.isDev')
@@ -13,26 +21,41 @@ class DBManager {
 
         return new Promise(((resolve, reject) => {
             mongoose.set('debug', isDevMode)
-            const uri = config.get('db.connectUrl')
-            console.info(`connect to db ${uri}`)
-            mongoose.connect(uri, {
+            const { host, name, user, pass } = config.get('db')
+            const uri = `mongodb://${host}/${name}`
+            const option = {
                 useNewUrlParser: true,
-                autoIndex: this.isDevMode,
                 useCreateIndex: true,
-            })
+            }
 
+            if (!isEmpty(user)) {
+                option.user = user
+            }
+
+            if (!isEmpty(pass)) {
+                option.pass = dc(pass)
+            }
+
+            logger.info(`try to connect mogodb ${uri}`)
+
+            mongoose.connect(uri, option)
             const db = mongoose.connection
             db.on('error', err => {
-                console.error('mongodb connection error:', err)
+                logger.error(err)
                 reject(err)
             })
 
             db.once('open', () => {
                 console.info('----------------------------')
-                console.info('mongodb connection success !')
+                logger.info('mongodb connection success !')
                 resolve()
             })
         }))
+    }
+
+    disconnectDB() {
+        logger.info('disconnect mongoDB')
+        return mongoose.disconnect()
     }
 }
 
