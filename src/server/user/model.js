@@ -19,8 +19,8 @@ this.Schema = new mongoose.Schema(schema, {
     strictQuery: 'throw',
 })
 
-const ProductModel = mongoose.model('product', this.Schema)
+const UserModel = mongoose.model('user', this.Schema)
 
 module.exports = {
-    ProductModel,
+    UserModel,
 }

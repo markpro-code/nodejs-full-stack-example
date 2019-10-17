@@ -2,6 +2,7 @@ import { connectRouter, routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux'
+import { createPromise } from 'redux-promise-middleware'
 import logger from 'redux-logger'
 import { fork } from 'redux-saga/effects'
 import commonReducer from '@/commons/reducer'
@@ -51,11 +52,15 @@ class App {
     init() {
         appHistory = createBrowserHistory()
         appSagaMiddleware = createSagaMiddleware()
-        const middlewares = [appSagaMiddleware]
+        const middlewares = [
+            createPromise({ promiseTypeSuffixes: ['REQUESTED', 'SUCCEEDED', 'FAILED'] }),
+            appSagaMiddleware,
+        ]
+
         middlewares.push(routerMiddleware(appHistory))
 
         // redux logger
-        if (process.env.NODE_ENV === 'production') {
+        if (process.env.COMPILE_ENV === 'dev') {
             middlewares.push(logger)
         }
 

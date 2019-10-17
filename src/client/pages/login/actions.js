@@ -1,4 +1,5 @@
 import { createActionTypes } from '@/commons/utils'
+import { userLogin } from '@/commons/services'
 
 export const actionTypes = createActionTypes($namespace, [
     'REGISTER',
@@ -15,6 +16,6 @@ export const actions = {
 
     dpActionLogin: (username, password) => ({
         type: actionTypes.LOGIN,
-        payload: { username, password },
+        payload: userLogin(username, password),
     }),
 }

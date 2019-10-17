@@ -14,31 +14,21 @@ const requestInstance = axios.create({
     responseType: 'json',
 })
 
-const errorCodeMap = {
-    10: '请求参数错误',
-    11: '系统错误',
-    20: '登录信息失效',
-}
 
 function request(options) {
     return requestInstance.request({
         ...options,
     }).then(response => {
-        const { success, body, message, errorCode } = response.data || {}
-        if (success !== true) {
-            if (String(errorCode) === '20') {
-                window.location.assign('/login')
-                return
-            }
-
+        const { status, messages, data } = response.data || {}
+        if (status === 'request_validation_error') {
             return Promise.reject({
                 showInDialog: true,
-                title: errorCodeMap[errorCode] || '请求异常',
-                content: message || '未知错误',
+                title: '请求数据校验失败',
+                content: messages,
             })
         }
 
-        return body
+        return data
     }).catch(error => {
         const { title, showInDialog, content } = error || {}
         if (showInDialog) {
@@ -64,7 +54,4 @@ export function userLogin(username, password) {
         url: '/api/user/login',
         data: { username, password },
     })
-        .then(userInfo => {
-        //
-        })
 }

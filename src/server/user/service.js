@@ -3,8 +3,8 @@ function register() {
 }
 
 
-function login() {
-
+async function login() {
+    console.info('user.login()')
 }
 
 function logout() {
@@ -20,5 +20,5 @@ module.exports = {
     register,
     login,
     logout,
-findOne,
+    findOne,
 }

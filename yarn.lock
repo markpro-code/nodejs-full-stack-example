@@ -6706,6 +6706,11 @@ redux-logger@^3.0.6:
   dependencies:
     deep-diff "^0.3.5"
 
+redux-promise-middleware@^6.1.1:
+  version "6.1.1"
+  resolved "https://registry.npm.taobao.org/redux-promise-middleware/download/redux-promise-middleware-6.1.1.tgz#0c26358712c2d5be3698faf7aaf53e7a7dc888dd"
+  integrity sha1-DCY1hxLC1b42mPr3qvU+en3IiN0=
+
 redux-saga@^1.1.1:
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/redux-saga/download/redux-saga-1.1.1.tgz?cache=0&sync_timestamp=1568706734416&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fredux-saga%2Fdownload%2Fredux-saga-1.1.1.tgz#7e02879beb02c92030b5fbe746fd70e8bda97dfb"
