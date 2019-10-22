@@ -1,9 +1,9 @@
 /* eslint import/order: 0 */
-const path = require('path')
-const projectName = require('../../../package.json').name
+const projectName = require('../../package.json').name
 const debug = require('debug')(projectName)
+const { clientRoot } = require('./webpack_common.js')
 
-const pageRoot = path.resolve(__dirname, '../').replace(/\\/g, '/')
+const pageRoot = clientRoot.replace(/\\/g, '/')
 
 module.exports = function (content, map, meta) {
     const namespace = this.context.replace(/\\/g, '/').replace(pageRoot, '').replace(/^\/+/, '')

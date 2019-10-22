@@ -2,40 +2,34 @@ const path = require('path')
 const webpack = require('webpack')
 const CaseSensitivePlugin = require('case-sensitive-paths-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const { optimization, publicPath, fileLoaders, namespaceInjectLoader, alias } = require('./webpack_common.js')
+const { clientRoot, optimization, publicPath, fileLoaders, namespaceInjectLoader, alias } = require('./webpack_common.js')
+const devServer = require('./webpack_dev_server.js')
 
-const clientRoot = path.join(__dirname, '../src/client')
 
 module.exports = {
-    mode: 'production',
+    mode: 'development',
     entry: {
         index: path.resolve(clientRoot, 'index.js'),
     },
     output: {
-        path: path.join(__dirname, '../dist/assets'),
-        filename: '[name].[hash].js',
-        publicPath: `${publicPath}`,
+        path: path.join(__dirname, '../dist/assets/'),
+        filename: '[name].js',
+        publicPath,
     },
     optimization,
     cache: true,
-    devtool: 'nosources-source-map',
+    devtool: 'cheap-module-eval-source-map',
     plugins: [
         new CaseSensitivePlugin(),
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.COMPILE_ENV': JSON.stringify(process.env.NODE_ENV),
         }),
         new HtmlWebpackPlugin({
-            template: path.resolve(clientRoot, 'index_prod.html'),
+            template: path.resolve(clientRoot, 'index_dev.html'),
             filename: '../index.html',
         }),
-        new MiniCSSExtractPlugin({
-            filename: '[name].[hash].css',
-        }),
-        new ProgressBarPlugin(),
     ],
 
     module: {
@@ -47,24 +41,14 @@ module.exports = {
         {
             test: /\.css$/,
             use: [
-                {
-                    loader: MiniCSSExtractPlugin.loader,
-                    options: {
-                        publicPath: './',
-                    },
-                },
+                'style-loader',
                 'css-loader',
             ],
         },
         {
             test: /\.less$/,
             use: [
-                {
-                    loader: MiniCSSExtractPlugin.loader,
-                    options: {
-                        publicPath: './',
-                    },
-                },
+                'style-loader',
                 {
                     loader: 'css-loader',
                     options: {
@@ -81,20 +65,16 @@ module.exports = {
         {
             test: /\.less$/,
             use: [
-                {
-                    loader: MiniCSSExtractPlugin.loader,
-                    options: {
-                        publicPath: './',
-                    },
-                },
+                'style-loader',
                 'css-loader',
                 'less-loader',
             ],
-            include: [path.resolve(__dirname, '../node_modules')],
+            include: [path.join(__dirname, '../node_modules')],
         }]),
     },
 
     resolve: {
         alias,
     },
+    devServer,
 }

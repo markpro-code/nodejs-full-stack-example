@@ -5,7 +5,7 @@
   "author": "markpro-code <markpro.code@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "WDS": "NODE_ENV=dev webpack-dev-server --config=config/webpack.config.dev.js --open",
+    "WDS": "NODE_ENV=dev webpack-dev-server --config=config/webpack/webpack.config.dev.js --open",
     "build": "webpack ---config config/webpack.config.prod.js",
     "serve:dev": "NODE_ENV=dev port=8080 nodemon --watch src/server ./scripts/start_server.js",
     "start": "concurrently \"npm:serve:dev\" \"npm:WDS\""

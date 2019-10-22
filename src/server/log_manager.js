@@ -33,7 +33,7 @@ const logConfig = {
 }
 log4js.configure(logConfig)
 
-const logger = log4js.getLogger('sfecli-manager')
+const logger = log4js.getLogger('full-stack-example')
 logger.info('logger configuration:', JSON.stringify(logConfig, null, 4))
 
 Container.set('logger', logger)
