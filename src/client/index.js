@@ -1,15 +1,12 @@
 import '@babel/polyfill'
-
-
 // import moment from 'moment'
 // import 'moment-timezone'
 import React from 'react'
 import ReactDom from 'react-dom'
-
+import { ConfigProvider } from 'antd'
 import { ConnectedRouter } from 'connected-react-router'
 import { Provider } from 'react-redux'
-import { LocaleProvider } from 'antd'
-import zhCN from 'antd/lib/locale-provider/zh_CN'
+import zhCN from 'antd/es/locale/zh_CN'
 
 import App from '@/commons/app'
 
@@ -25,11 +22,11 @@ const Main = require('@/pages/main').default
 // Render
 const AppRoot = () => (
     <Provider store={App.store}>
-        <LocaleProvider locale={zhCN}>
+        <ConfigProvider locale={zhCN}>
             <ConnectedRouter history={App.history}>
                 <Main />
             </ConnectedRouter>
-        </LocaleProvider>
+        </ConfigProvider>
     </Provider>
 )
 
