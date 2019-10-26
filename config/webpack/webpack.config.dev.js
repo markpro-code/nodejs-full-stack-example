@@ -24,7 +24,7 @@ module.exports = {
         new CaseSensitivePlugin(),
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
-            'process.env.COMPILE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.COMPILE_ENV': JSON.stringify('dev'),
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(clientRoot, 'index_dev.html'),

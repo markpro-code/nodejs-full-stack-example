@@ -25,7 +25,7 @@ module.exports = {
         new CaseSensitivePlugin(),
         new CleanWebpackPlugin(),
         new webpack.DefinePlugin({
-            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+            'process.env.COMPILE_ENV': JSON.stringify('prod'),
         }),
         new HtmlWebpackPlugin({
             template: path.resolve(clientRoot, 'index_prod.html'),
