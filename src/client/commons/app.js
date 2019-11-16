@@ -1,6 +1,7 @@
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import createSagaMiddleware from 'redux-saga'
 import { createBrowserHistory } from 'history'
+// import { createHashHistory } from 'history'
 import { combineReducers, compose, applyMiddleware, createStore } from 'redux'
 import { createPromise } from 'redux-promise-middleware'
 import logger from 'redux-logger'
@@ -51,6 +52,10 @@ function getSagaRoot() {
 class App {
     init() {
         appHistory = createBrowserHistory()
+
+        // hash history
+        // appHistory = createHashHistory()
+
         appSagaMiddleware = createSagaMiddleware()
         const middlewares = [
             createPromise({ promiseTypeSuffixes: ['REQUESTED', 'SUCCEEDED', 'FAILED'] }),

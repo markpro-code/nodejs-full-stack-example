@@ -58,8 +58,8 @@ function sendData(res, data) {
         res.end(data)
     } else {
         res.json({
-            status : 'success',
-            data   : data == null ? {} : data,
+            status: 'success',
+            data: data == null ? {} : data,
         })
     }
 }
