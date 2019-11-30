@@ -10,6 +10,7 @@ import zhCN from 'antd/es/locale/zh_CN'
 
 import App from '@/commons/app'
 
+import 'antd/dist/antd.less'
 import './styles/less/index.less'
 
 // 初始化App对象

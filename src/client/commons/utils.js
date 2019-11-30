@@ -1,4 +1,4 @@
-import { get, map, find, forEach } from 'lodash'
+import { get, map, find, forEach, isPlainObject } from 'lodash'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 
@@ -47,7 +47,19 @@ export function createActionTypes(namespace, list) {
         throw new Error('缺少参数 namespace')
     }
     const obj = {}
+
+    const newList = []
     forEach(list, item => {
+        if (item.startsWith('ajax:')) {
+            item = item.replace(/^ajax:/, '')
+            newList.push(`${item}_REQUESTED`)
+            newList.push(`${item}_SUCCEEDED`)
+            newList.push(`${item}_FAILED`)
+        }
+        newList.push(item)
+    })
+
+    forEach(newList, item => {
         obj[item] = `${namespace}/${item}`
     })
     return deepFreeze(obj)
@@ -59,4 +71,15 @@ export function defaultConnect(namespace, PageComponent, mapDispatchToProps) {
         (commons, data) => ({ commons, data }),
     )
     return connect(mapStateToProps, mapDispatchToProps)(PageComponent)
+}
+
+export function isEmpty(obj) {
+    if (Number.isNaN(obj)) {
+        return true
+    } if (Array.isArray(obj)) {
+        return obj.length === 0
+    } if (isPlainObject(obj)) {
+        return Object.keys(obj).length === 0
+    }
+    return obj == null || String(obj).trim() === ''
 }
