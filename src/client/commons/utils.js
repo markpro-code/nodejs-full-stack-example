@@ -1,6 +1,18 @@
 import { get, map, find, forEach, isPlainObject } from 'lodash'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
+import  numeral from 'numeral'
+
+export function isEmpty(obj) {
+    if (Number.isNaN(obj)) {
+        return true
+    } if (Array.isArray(obj)) {
+        return obj.length === 0
+    } if (isPlainObject(obj)) {
+        return Object.keys(obj).length === 0
+    }
+    return obj == null || String(obj).trim() === ''
+}
 
 export function deepFreeze(obj) {
     // Retrieve the property names defined on obj
@@ -19,6 +31,23 @@ export function deepFreeze(obj) {
 }
 
 export function enums(list) {
+    // ----- parameter check
+    if (!Array.isArray(list)) {
+        throw new Error('list must be Array')
+    }
+
+    if (isEmpty(list)) {
+        throw new Error('list can not be empty')
+    }
+
+    if (list.some(item => isEmpty(item.key))) {
+        throw new Error('list item key must not be empty')
+    }
+
+    if (list.some(item => isEmpty(item.value))) {
+        throw new Error('list item value must not be empty')
+    }
+
     const obj = {
         list,
     }
@@ -33,13 +62,24 @@ export function enums(list) {
 
     obj.map = function (...args) {
         return map(list, ...args)
-    };
+    }
 
-    (list || []).forEach(item => {
+    list.forEach(item => {
         obj[String(item.key).toUpperCase()] = item.value
     })
 
-    return deepFreeze(obj)
+    return new Proxy(obj, {
+        set(trapTarget, key, value, receiver) {
+            // ignore property assignment
+        },
+        get(trapTarget, key, receiver) {
+            if (!(key in receiver)) {
+                console.error(`property ${key} doesn't exit in `, obj)
+                throw new TypeError(`Property ${key} doesn't exist.`)
+            }
+            return Reflect.get(trapTarget, key, receiver)
+        },
+    })
 }
 
 export function createActionTypes(namespace, list) {
@@ -73,13 +113,11 @@ export function defaultConnect(namespace, PageComponent, mapDispatchToProps) {
     return connect(mapStateToProps, mapDispatchToProps)(PageComponent)
 }
 
-export function isEmpty(obj) {
-    if (Number.isNaN(obj)) {
-        return true
-    } if (Array.isArray(obj)) {
-        return obj.length === 0
-    } if (isPlainObject(obj)) {
-        return Object.keys(obj).length === 0
-    }
-    return obj == null || String(obj).trim() === ''
+
+/** *
+ *  format number
+ */
+export const formatNumber = (format, nullFormat = 'N/A') => value => {
+    numeral.nullFormat(nullFormat)
+    return numeral(value).format(format)
 }
