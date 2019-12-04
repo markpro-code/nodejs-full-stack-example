@@ -121,3 +121,16 @@ export const formatNumber = (format, nullFormat = 'N/A') => value => {
     numeral.nullFormat(nullFormat)
     return numeral(value).format(format)
 }
+
+/**
+ *  return new object with empty properties removed
+ */
+export function filterEmptyProps(obj) {
+    const newObj = {}
+    forOwn(obj, function (value, key) {
+        if (!isEmpty(value)) {
+            newObj[key] = value
+        }
+    })
+    return newObj
+}
