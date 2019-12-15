@@ -26,7 +26,7 @@ module.exports = {
         return p.indexOf('.html') > -1
     },
     proxy: [{
-        context: ['/api/'],
+        context: ['/images/*', '/api/**'],
         target,
         changeOrigin: true,
         onProxyReq(proxyReq, req) {

@@ -1,3 +1,4 @@
+import React from 'react'
 import { Modal } from 'antd'
 import axios from 'axios'
 
@@ -24,7 +25,15 @@ function request(options) {
             return Promise.reject({
                 showInDialog: true,
                 title: '请求数据校验失败',
-                content: messages,
+                content: <pre>{messages}</pre>,
+            })
+        }
+
+        if (status === 'server_error') {
+            return Promise.reject({
+                showInDialog: true,
+                title: 'Server Error',
+                content: <pre>{messages}</pre>,
             })
         }
 

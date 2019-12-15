@@ -1,5 +1,7 @@
 module.exports = {
-    extends: 'airbnb',
+    extends: [
+        'airbnb',
+    ],
     env: {
         browser: true,
         commonjs: true,
@@ -52,6 +54,7 @@ module.exports = {
         'react/jsx-indent-props': [2, 4],
         'react/jsx-no-bind': 0,
         'react/jsx-one-expression-per-line': 0,
+        'react/jsx-props-no-spreading': 0,
         'react/jsx-wrap-multilines': 0,
         'react/no-array-index-key': 0,
         'react/no-multi-comp': 0,

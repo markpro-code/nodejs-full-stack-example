@@ -52,7 +52,7 @@ function start() {
             })
         } else {
             res.json({
-                status: 'error',
+                status: 'server_error',
                 data: {},
                 messages: `${err}\n${err.stack}`,
             })
