@@ -1,9 +1,11 @@
+const path = require('path')
 const { Container } = require('typedi')
 const express = require('express')
 const compression = require('compression')
 const morgan = require('morgan')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
+const fileUpload = require('express-fileupload')
 const ip = require('ip')
 
 const appRouter = require('./router.js')
@@ -39,6 +41,12 @@ function start() {
     app.use(express.json({ limit: '50mb' }))
     // parsing application/x-www-form-urlencoded
     app.use(express.urlencoded({ extended: true }))
+    // serve static file
+    app.use(express.static(path.resolve(__dirname, '../../public')))
+    // file upload
+    app.use(fileUpload({
+        limits: { fileSize: 50 * 1024 * 1024 },
+    }))
 
     app.use(appRouter)
 
