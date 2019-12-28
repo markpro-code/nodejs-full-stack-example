@@ -1,4 +1,5 @@
-import { get, map, find, forEach, isPlainObject, forOwn } from 'lodash'
+import { get, map, find, forEach, isPlainObject, forOwn, result } from 'lodash'
+import { set as setImmutableState } from 'object-path-immutable'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
 import  numeral from 'numeral'
@@ -133,4 +134,29 @@ export function filterEmptyProps(obj) {
         }
     })
     return newObj
+}
+
+
+export function bindStateUpdator(context, statePath) {
+    /**
+     *  state updator function
+     *
+     *  @param key: string, the state key to update
+     *  @param pathGet: string, property path to get value
+     *  @param needTrim: need trim the value of not
+     */
+    const updator = function (key, pathGet, needTrim = false) {
+        return value => {
+            console.info('context===this, statePath, key, pathGet, needTrim: ', context === this, statePath, key, pathGet, needTrim)
+            if (pathGet != null) {
+                value = needTrim ? String(result(value, pathGet)).trim() : result(value, pathGet)
+            }
+            this.setState(prevState => setImmutableState(prevState, statePath.concat(key), value))
+        }
+    }
+    return updator.bind(context)
+}
+
+export function setStateAsync(updateFn) {
+    return new Promise(resolve => this.setState(updateFn, resolve))
 }
