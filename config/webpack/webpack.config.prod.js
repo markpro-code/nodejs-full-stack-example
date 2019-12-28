@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const { clientRoot, optimization, publicPath, fileLoaders, namespaceInjectLoader, alias } = require('./webpack_common.js')
+const { clientRoot, outputPath, optimization, publicPath, fileLoaders, namespaceInjectLoader, alias } = require('./webpack_common.js')
 
 
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
         index: path.resolve(clientRoot, 'index.js'),
     },
     output: {
-        path: path.join(__dirname, '../dist/assets'),
+        path: outputPath,
         filename: '[name].[hash].js',
         publicPath: `${publicPath}`,
     },

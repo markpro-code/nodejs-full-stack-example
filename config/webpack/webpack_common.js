@@ -3,6 +3,7 @@ const TerserPlugin = require('terser-webpack-plugin')
 
 const publicPath = '/assets/'
 const clientRoot = path.resolve(__dirname, '../../src/client')
+const outputPath = path.resolve(__dirname, '../../dist/assets')
 
 const namespaceInjectLoader = {
     loader: path.resolve(__dirname, './namespace_inject_loader.js'),
@@ -63,6 +64,7 @@ const fileLoaders = [
 
 module.exports = {
     clientRoot,
+    outputPath,
     namespaceInjectLoader,
     optimization,
     publicPath,
