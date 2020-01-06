@@ -137,24 +137,14 @@ export function filterEmptyProps(obj) {
 }
 
 
-export function bindStateUpdator(context, statePath) {
-    /**
-     *  state updator function
-     *
-     *  @param key: string, the state key to update
-     *  @param pathGet: string, property path to get value
-     *  @param needTrim: need trim the value of not
-     */
-    const updator = function (key, pathGet, needTrim = false) {
-        return value => {
-            console.info('context===this, statePath, key, pathGet, needTrim: ', context === this, statePath, key, pathGet, needTrim)
-            if (pathGet != null) {
-                value = needTrim ? String(result(value, pathGet)).trim() : result(value, pathGet)
-            }
-            this.setState(prevState => setImmutableState(prevState, statePath.concat(key), value))
-        }
+export const stateUpdator = (component, statePath) => (propName, pathToGetValue, needTrim = false) => value => {
+    console.info('stateUpdator() value: ', value)
+    if (pathToGetValue != null) {
+        value = needTrim ? String(result(value, pathToGetValue)).trim() : result(value, pathToGetValue)
     }
-    return updator.bind(context)
+    component.setState(function (prevState) {
+        return setImmutableState(prevState, `${statePath}.${propName}`, value)
+    })
 }
 
 export function setStateAsync(updateFn) {
