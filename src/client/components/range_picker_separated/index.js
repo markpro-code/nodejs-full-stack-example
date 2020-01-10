@@ -33,10 +33,10 @@ export default class RangePickerSeparated extends React.Component {
     /* --------- [handlers-end] ----------- */
 
     render() {
-        const { value, className, showTime } = this.props
+        const { value, className, style: styleObj, showTime } = this.props
         const [timeStart, timeEnd] = value
         return (
-            <div className={cn(style.range_picker_separated, className)}>
+            <div className={cn(style.range_picker_separated, className)} style={styleObj}>
                 <DatePicker
                     className={style.time_start}
                     showTime={showTime}
@@ -68,10 +68,12 @@ RangePickerSeparated.propTypes = {
     value: PropTypes.array.isRequired,
     showTime: PropTypes.bool,
     className: PropTypes.string,
+    style: PropTypes.object,
 }
 
 
 RangePickerSeparated.defaultProps = {
     className: null,
+    style: null,
     showTime: false,
 }
