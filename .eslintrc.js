@@ -10,7 +10,12 @@ module.exports = {
     },
     parser: 'babel-eslint',
     globals: {
-        '$namespace': 'readonly'
+        '$namespace': 'readonly',
+        'describe': 'readonly',
+        'xdescribe': 'readonly',
+        'expect': 'readonly',
+        'it': 'readonly',
+        'xit': 'readonly',
     },
     rules: {
         'arrow-parens': [2, 'as-needed'],
