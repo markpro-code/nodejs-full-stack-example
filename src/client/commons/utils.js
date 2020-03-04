@@ -150,3 +150,19 @@ export const stateUpdator = (component, statePath) => (propName, pathToGetValue,
 export function setStateAsync(updateFn) {
     return new Promise(resolve => this.setState(updateFn, resolve))
 }
+
+
+/**
+ *  download file by get request through iframe
+ */
+export function downlaodByIframe(url) {
+    let iframe
+    iframe = document.getElementById('hidden_iframe_downloader')
+    if (iframe == null) {
+        iframe = document.createElement('iframe')
+        iframe.id = 'hidden_iframe_downloader'
+        iframe.style.display = 'none'
+        document.body.appendChild(iframe)
+    }
+    iframe.src = url
+}
