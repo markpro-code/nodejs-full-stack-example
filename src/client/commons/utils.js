@@ -166,3 +166,18 @@ export function downlaodByIframe(url) {
     }
     iframe.src = url
 }
+
+
+/**
+ *  display number value
+ *
+ *  @param options {object}:
+ *  @param options.digit {number}: digit count after decimal point
+ *  @param options.emptyChar {string}: character to display when value is not a number
+ *
+ */
+export const displayNum = options => value => {
+    const { digit = 0, emptyChar = '-' } = options || {}
+    value = Number(value)
+    return Number.isNaN(value) ? emptyChar : value.toFixed(digit)
+}
