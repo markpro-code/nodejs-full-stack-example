@@ -1,7 +1,10 @@
 import React from 'react'
 import { Modal } from 'antd'
 import axios from 'axios'
+import assert from 'assert'
+import { isEmpty } from '@/commons/utils'
 
+const prefix = '/tlGasoline'
 
 /**
  *  用于发送AJAX请求
@@ -17,6 +20,10 @@ const requestInstance = axios.create({
 
 
 function request(options) {
+    assert(!isEmpty(options.url), 'request options.url can not be empty')
+    assert(options.url.startsWith('/'), 'request options.url must starts with \'/\'')
+
+    options.url = `${prefix}/${options.url}`
     return requestInstance.request({
         ...options,
     }).then(response => {
